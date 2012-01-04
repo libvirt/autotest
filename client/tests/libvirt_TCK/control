@@ -17,4 +17,30 @@ TEST_CLASS = 'Virtualization'
 TEST_TYPE= 'client'
 TEST_CATEGORY = 'Regresstion'
 
-job.run_test('libvirt_TCK')
+import os
+
+os.environ['LANG'] = 'en_US.UTF-8'
+
+libvirt_TCK_dir = os.path.join(os.environ['AUTODIR'],'tests/libvirt_TCK')
+
+def get_case_item(casefile):
+    if not os.path.exists(casefile):
+        return
+
+    case_items = []
+    fh = open(casefile, "r")
+    for eachLine in fh:
+        line = eachLine.strip()
+        if not line or line[0].isdigit() or line.startswith('#'):
+            continue
+
+        item = line[:-1]
+        case_items.append(item)
+
+    return case_items
+
+testcase_conf = os.path.join(libvirt_TCK_dir, 'testcase.cfg')
+item_list = get_case_item(testcase_conf)
+
+for item in item_list:
+    job.run_test('libvirt_TCK', args=item, tag=item)
