@@ -65,7 +65,7 @@ class libvirt_TCK(test.test):
         fh.close()
         return testcases
 
-    def run_once(self, args=[]):
+    def run_once(self, args = ''):
         if not args:
             raise error.JobError("NO TEST avaliable")
 
