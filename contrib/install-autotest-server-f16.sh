@@ -168,8 +168,6 @@ print_log "INFO" "Installing development packages"
 yum install -y git java-1.6.0-openjdk-devel >> $LOG 2>&1
 print_log "INFO" "Installing python libraries"
 yum install -y python-imaging python-crypto python-paramiko python-httplib2 numpy python-matplotlib python-atfork >> $LOG 2>&1
-print_log "INFO" "Installing/updating lsb package"
-yum install -y lsb >> $LOG 2>&1
 print_log "INFO" "Installing/updating selinux policy"
 yum install -y selinux-policy selinux-policy-targeted policycoreutils-python >> $LOG 2>&1
 
@@ -314,7 +312,7 @@ fi
 print_log "INFO" "Starting the scheduler"
 if [ -x /etc/init.d/httpd ]
 then
-    cp $ATHOME/utils/autotest.init /etc/init.d/autotest >> $LOG
+    cp $ATHOME/utils/autotest-rh.init /etc/init.d/autotest >> $LOG
     chmod +x /etc/init.d/autotest >> $LOG
     chkconfig --level 2345 autotest on >> $LOG
     /etc/init.d/autotest stop >> $LOG
